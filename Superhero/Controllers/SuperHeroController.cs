@@ -43,7 +43,7 @@ namespace Superhero.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(Super_Heroes superHero)
+        public ActionResult Create([Bind(Include = "HeroName,AlterEgo,PrimaryAbilty,SecondaryAbility,CatchPhrase")]Super_Heroes superHero)
         {
             try
             {               
@@ -61,21 +61,26 @@ namespace Superhero.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            return View();
+            var editHero = db.Heroes.Where(x => x.ID == id).FirstOrDefault();
+            return View(editHero);
         }
 
         [HttpPost]
-        public ActionResult Edit(Super_Heroes superHero, int id)
+        public ActionResult Edit([Bind(Include = "HeroName,AlterEgo,PrimaryAbilty,SecondaryAbility,CatchPhrase")]Super_Heroes superHero, int id)
         {
             try
             {
                 var updateHero = db.Heroes.Where(x => x.ID == id).FirstOrDefault();
-
+                updateHero.HeroName = superHero.HeroName;
+                updateHero.AlterEgo = superHero.AlterEgo;
+                updateHero.PrimaryAbilty = superHero.PrimaryAbilty;
+                updateHero.SecondaryAbility = superHero.SecondaryAbility;
+                updateHero.CatchPhrase = superHero.CatchPhrase;
 
                 //db.Heros.Where(x => x.ID == id select x).ToList().ForEach(y => y.is_default = false);
                 //db.SubmitChanges();
-                db.Heroes.Remove(updateHero);
-                db.Heroes.Add(superHero);
+                //db.Heroes.Remove(updateHero);
+                //db.Heroes.Add(superHero);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -89,11 +94,13 @@ namespace Superhero.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            return View();
+            var showHero = db.Heroes.Where(x => x.ID == id).FirstOrDefault();
+            return View(showHero);
         }
 
         [HttpPost]
-        public ActionResult Delete(Super_Heroes superHero, int id)
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete([Bind(Include = "HeroName,AlterEgo,PrimaryAbilty,SecondaryAbility,CatchPhrase")]Super_Heroes superHero, int id)
         {
             try
             {
