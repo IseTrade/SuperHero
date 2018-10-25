@@ -29,31 +29,33 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.HeroName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AlterEgo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrimaryAbilty)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SecondaryAbility)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CatchPhrase)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HeroName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlterEgo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrimaryAbilty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecondaryAbility)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CatchPhrase)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
 
-<img src="/images/deadpool-2.jpg" width="1024" height="576" alt="Sample Photo" />
+
+<img src="~/Content/images/deadpool-2.jpg" width="1024" height="576" alt="Sample Photo" />
