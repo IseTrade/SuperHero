@@ -85,8 +85,11 @@ namespace Superhero.Controllers
         {
             try
             {
-                Super_Heroes updateHero = db.Heroes.Where(x => x.ID == id).FirstOrDefault();
-                db.Heroes.Add(updateHero);
+                var updateHero = db.Heroes.Where(x => x.ID == id).FirstOrDefault();
+                //db.Heroes.Add(updateHero);
+                db.Heroes.Remove(updateHero);
+                db.Heroes.Add(superHero);
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
