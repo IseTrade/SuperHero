@@ -10,27 +10,23 @@ namespace Superhero.Controllers
     public class SuperHeroController : Controller
     {
         public ApplicationDbContext db;
-
         public SuperHeroController()
         {
             db = new ApplicationDbContext();
         }
-        // GET: SuperHero
+
+        //======================================================================
         public ActionResult Index()
         {
-            List<Super_Heroes> superHeroes = new List<Super_Heroes>();
-            //List<Super_Heroes> showMeTheJunk = db.Heroes.Select(x => x).ToList();
             List<Super_Heroes> showMeTheJunk = db.Heroes.ToList();
-
             return View(showMeTheJunk);
         }
+        //======================================================================
 
-        // GET: SuperHero/Details/5
         [HttpGet]
         public ActionResult Details(int id)
         {
-            Super_Heroes superHero = new Super_Heroes();
-            Super_Heroes showDetails = db.Heroes.Where(x => x.ID == id).Single();
+            Super_Heroes showDetails = db.Heroes.Where(x => x.ID == id).SingleOrDefault();
             return View(showDetails);
         }
 
@@ -39,31 +35,20 @@ namespace Superhero.Controllers
         {
             return View();
         }
+        //====================================================================
 
-        // GET: SuperHero/Create
         [HttpGet]
         public ActionResult Create()
         {
-            //Super_Heroes superHero = new Super_Heroes();
-            //db.Heroes.Add(superHero);
-
             return View();
         }
-
-        // POST: SuperHero/Create
         [HttpPost]
         public ActionResult Create(Super_Heroes superHero)
         {
             try
-            {
-
-                //Super_Heroes superHero = new Super_Heroes();
-                db.Heroes.Add(superHero);
-              
+            {               
+                db.Heroes.Add(superHero);              
                 db.SaveChanges();
-                //return View("Index");
-                // TODO: Add insert logic here
-
                 return RedirectToAction("Index");
             }
             catch
@@ -71,25 +56,26 @@ namespace Superhero.Controllers
                 return View();
             }
         }
+        //======================================================================
 
-        // GET: SuperHero/Edit/5
         [HttpGet]
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: SuperHero/Edit/5
         [HttpPost]
         public ActionResult Edit(Super_Heroes superHero, int id)
         {
             try
             {
                 var updateHero = db.Heroes.Where(x => x.ID == id).FirstOrDefault();
-                //db.Heroes.Add(updateHero);
+
+
+                //db.Heros.Where(x => x.ID == id select x).ToList().ForEach(y => y.is_default = false);
+                //db.SubmitChanges();
                 db.Heroes.Remove(updateHero);
                 db.Heroes.Add(superHero);
-                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -98,24 +84,22 @@ namespace Superhero.Controllers
                 return View();
             }
         }
+        //======================================================================
 
-        // GET: SuperHero/Delete/5
         [HttpGet]
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: SuperHero/Delete/5
         [HttpPost]
         public ActionResult Delete(Super_Heroes superHero, int id)
         {
             try
             {
-                Super_Heroes removeHero = db.Heroes.Where(x => x.ID == id).FirstOrDefault();
+                var removeHero = db.Heroes.Where(x => x.ID == id).FirstOrDefault();
                 db.Heroes.Remove(removeHero);
                 db.SaveChanges();
-
                 return RedirectToAction("Index");
             }
             catch
@@ -123,14 +107,6 @@ namespace Superhero.Controllers
                 return View();
             }
         }
-
-
-
-
-
-
-
-
-
+        //===================================================================
     }
 }
